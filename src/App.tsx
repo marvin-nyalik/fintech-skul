@@ -1,12 +1,27 @@
 import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Mission from './components/Mission';
+import Home from './components/Home';
+import NotFound from './components/NotFound';
 
-function App() {
-
+export function App() {
   return (
-    <div>
-        Hello World
-    </div>
+    <>
+    <Routes>
+      <Route path='/' element={<Home />}/>
+      <Route path='/missions' element={<Mission />}/>
+      <Route path='*' element={<NotFound />}/>
+    </Routes>
+    </>
   )
 }
 
-export default App
+export const WrappedApp = () =>{
+  return (
+    <>
+      <BrowserRouter>
+        <App/>
+      </BrowserRouter>
+    </>
+  )
+}
