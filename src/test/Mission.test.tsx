@@ -1,11 +1,25 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import Mission from "../components/Mission";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 describe('Mission Component', () => {
   it('Renders correctly', ()=>{
-    render(<Mission/>)
+    const mockHandleClick = vi.fn()
+    render(<Mission handleClick={mockHandleClick}/>)
     const heading = screen.getByText(/Mission here/i);
     expect(heading).toBeInTheDocument();
+  })
+
+  it('Finds button and calls callback', () => {
+    const mockHandleClick = vi.fn();
+    render(<Mission handleClick={mockHandleClick}/>)
+
+    const btn = screen.getByRole("button", {
+      name: /Hot/i
+    })
+
+    expect(btn).toBeInTheDocument();
+    fireEvent.click(btn)
+    expect(mockHandleClick).toHaveBeenCalledTimes(1)
   })
 })
